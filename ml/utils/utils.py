@@ -8,23 +8,22 @@ class DataHandler:
     """
         Get data from sources
     """
-    
     def __init__(self):
         self.csvfile1 = None
         self.csvfile2 = None
         self.gouped_data = None
-        
+
     def getData(self):
-    	return self.csvfile1
-        
+            return self.csvfile1
+
     def setData(self, data: pd.DataFrame):
-    	self.csvfile1 = data
-        
+            self.csvfile1 = data
+
 df = DataHandler()
 df.setData(pd.read_csv('labels.csv'))
 df = df.getData()
 df.info()
-        
+
 
 class FeatureRecipe:
     """
@@ -36,48 +35,31 @@ class FeatureRecipe:
         self.categorical = None
         self.discrete = None
         self.datetime = None
-        
+
     def setContinuous(self, data: pd.DataFrame):
-    	self.continuous = data
-    	
+        self.continuous = data
+
     def setCategorical(self, data: pd.DataFrame):
-    	self.categorical = data
-    	
+        self.categorical = data
+
     def setDiscrete(self, data: pd.DataFrame):
-    	self.discrete = data
-    	
+        self.discrete = data
+
     def getCategorical(self):
-    	return self.categorical
-    """
-    def tweetClean(tweet: pd.DataFrame):
-    
-    	tweetClean = tweet.str.replace('\W', ' ')
-	stop = stopwords.words('english')
-	pat = r'\b(?:{})\b'.format('|'.join(stop))
-	tweetClean = tweetClean.str.replace(pat, '')
-	
-    	return tweetClean
-    """	
+        return self.categorical
 
-df['tweetClean'] = df['tweet'].str.replace('\W', ' ')
+    def tweetClean(self):
 
-from nltk.corpus import stopwords
-stop = stopwords.words('english')
-pat = r'\b(?:{})\b'.format('|'.join(stop))
-df['tweetClean'] = df['tweetClean'].str.replace(pat, '')
-df
+        tweetClean = self.data['tweet'].str.replace('\W', ' ')
+        stop = stopwords.words('english')
+        pat = r'\b(?:{})\b'.format('|'.join(stop))
+        self.data['tweetClean'] = tweetClean.str.replace(pat, '')
+        tweetClean = self.data['tweetClean']
 
-number = st.number_input("Number of Rows to View")
-st.dataframe(df.head(int(number)))
+        return tweetClean
 
-fr = FeatureRecipe(df)
-fr.setCategorical(df['tweetClean'])
-fr = fr.getCategorical()
 
-X = fr
-X
-y = df['class']
-y       
+
 
 
 
@@ -93,23 +75,23 @@ class FeatureExtractor:
         self.data = data
         self.X = flist
         self.y = None
-   
+
     def getData(self):
     	return self.data
-    	
+
     def getX(self):
     	return self.X
-    
+
     def getY(self):
     	return self.y
-    	
+
     def setX(self, X: list):
     	self.X =  X
-    
+
     def setY(self, y: list):
     	self.y = y
 
-fe = FeatureExtractor(df, X)
+
 
 
 
